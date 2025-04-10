@@ -1,0 +1,51 @@
+openapi: 3.0.0
+info:
+  title: Multi-Vendor eCommerce API
+  description: Wallet API for managing wallet-related actions.
+  version: 1.0.0
+servers:
+  - url: "http://localhost:5000"
+    description: Local server
+
+paths:
+  /api/wallet/add-money:
+    post:
+      summary: Add money to wallet
+      description: Allows a customer to add money to their wallet.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                  format: float
+                  example: 100.50
+      responses:
+        200:
+          description: Money added to wallet successfully
+        400:
+          description: Invalid amount or data
+        401:
+          description: Unauthorized access
+
+  /api/wallet/balance/{userId}:
+    get:
+      summary: Get wallet balance
+      description: Retrieves the current wallet balance of a specific customer.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: The ID of the customer whose wallet balance is being retrieved
+          schema:
+            type: string
+      responses:
+        200:
+          description: Wallet balance retrieved successfully
+        404:
+          description: User not found
+        401:
+          description: Unauthorized access

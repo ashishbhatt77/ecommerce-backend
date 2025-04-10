@@ -1,0 +1,171 @@
+openapi: 3.0.0
+info:
+  title: Multi-Vendor eCommerce API
+  version: 1.0.0
+  description: API for managing products in a multi-vendor eCommerce platform.
+
+servers:
+  - url: "http://localhost:5000"
+    description: Local server
+
+paths:
+  /api/products:
+    post:
+      summary: Add a new product
+      description: Allows a seller to add a new product with multiple images.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Product Name"
+                price:
+                  type: number
+                  example: 25.99
+                description:
+                  type: string
+                  example: "Product description"
+                images:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                  description: "Images of the product (up to 5)"
+      responses:
+        201:
+          description: Product added successfully
+        400:
+          description: Invalid data provided
+
+  /api/products/active:
+    get:
+      summary: Get all active products
+      description: Retrieves all active products available for sale.
+      responses:
+        200:
+          description: A list of active products
+        500:
+          description: Internal server error
+
+  /api/products/electronics:
+    get:
+      summary: Get all electronic products
+      description: Retrieves all electronic products available for sale.
+      responses:
+        200:
+          description: A list of electronic products
+        500:
+          description: Internal server error
+
+  /api/products/fashion:
+    get:
+      summary: Get all fashion products
+      description: Retrieves all fashion products available for sale.
+      responses:
+        200:
+          description: A list of fashion products
+        500:
+          description: Internal server error
+
+  /api/products/grocery:
+    get:
+      summary: Get all grocery products
+      description: Retrieves all grocery products available for sale.
+      responses:
+        200:
+          description: A list of grocery products
+        500:
+          description: Internal server error
+
+  /api/products/home-kitchen:
+    get:
+      summary: Get all home and kitchen products
+      description: Retrieves all home and kitchen products available for sale.
+      responses:
+        200:
+          description: A list of home and kitchen products
+        500:
+          description: Internal server error
+
+  /api/products/seller/products:
+    get:
+      summary: Get products of a seller
+      description: Retrieves all products listed by the seller.
+      responses:
+        200:
+          description: A list of products by the seller
+        500:
+          description: Internal server error
+
+  /api/products/{id}:
+    get:
+      summary: Get a specific product
+      description: Retrieves the details of a single product by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The product's ID
+          schema:
+            type: string
+      responses:
+        200:
+          description: Product details
+        404:
+          description: Product not found
+    put:
+      summary: Update a product
+      description: Allows a seller to update an existing product by ID with new data.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The product's ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Updated Product Name"
+                price:
+                  type: number
+                  example: 30.00
+                description:
+                  type: string
+                  example: "Updated product description"
+                images:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                  description: "Updated images for the product"
+      responses:
+        200:
+          description: Product updated successfully
+        400:
+          description: Invalid data provided
+    delete:
+      summary: Delete a product
+      description: Allows a seller to delete a product by ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The product's ID
+          schema:
+            type: string
+      responses:
+        204:
+          description: Product deleted successfully
+        404:
+          description: Product not found

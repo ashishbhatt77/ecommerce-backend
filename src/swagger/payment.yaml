@@ -1,0 +1,71 @@
+openapi: 3.0.0
+info:
+  title: Multi-Vendor eCommerce API
+  description: Wallet API for managing wallet balance and payments.
+  version: 1.0.0
+servers:
+  - url: "http://localhost:5000"
+    description: Local server
+
+paths:
+  /api/wallet/wallet-payment:
+    post:
+      summary: Wallet payment
+      description: Allows customers to make payments using their wallet balance.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                orderId:
+                  type: string
+                  example: "orderId123"
+                amount:
+                  type: number
+                  format: float
+                  example: 200.50
+      responses:
+        200:
+          description: Payment processed successfully
+        400:
+          description: Insufficient wallet balance or invalid payment request
+
+  /api/wallet/add-money:
+    post:
+      summary: Add money to wallet
+      description: Allows customers to add money to their wallet.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                  format: float
+                  example: 500.00
+      responses:
+        200:
+          description: Money added to wallet successfully
+        400:
+          description: Invalid amount or request
+
+  /api/wallet/wallet-balance/{userId}:
+    get:
+      summary: Get wallet balance
+      description: Retrieves the current wallet balance of a customer.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: The ID of the customer whose wallet balance is to be fetched
+          schema:
+            type: string
+      responses:
+        200:
+          description: Wallet balance retrieved successfully
+        404:
+          description: User not found

@@ -1,0 +1,77 @@
+openapi: 3.0.0
+info:
+  title: Multi-Vendor eCommerce API
+  description: Auth API for login, forgot password, and reset password.
+  version: 1.0.0
+servers:
+  - url: "http://localhost:5000"
+    description: Local server
+
+paths:
+  /api/auth/login:
+    post:
+      summary: User login
+      description: Login a user by email and password.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "john.doe@example.com"
+                password:
+                  type: string
+                  example: "password123"
+      responses:
+        200:
+          description: Login successful
+        401:
+          description: Unauthorized
+
+  /api/auth/forgot-password:
+    post:
+      summary: Forgot password
+      description: Request to reset password by providing the email.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "john.doe@example.com"
+      responses:
+        200:
+          description: Email sent with reset instructions
+        400:
+          description: Invalid email address
+
+  /api/auth/reset-password:
+    post:
+      summary: Reset password
+      description: Reset the password with the provided token and new password.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                  example: "some-valid-token"
+                newPassword:
+                  type: string
+                  example: "newpassword123"
+      responses:
+        200:
+          description: Password reset successful
+        400:
+          description: Invalid token or password
+        404:
+          description: User not found
