@@ -16,7 +16,7 @@ app.use(cookieParser());
 app.use(mongoSanitize());
 
 // ✅ CORS Setup (Fixed)
-const allowedOrigin = "https://stately-centaur-fb5f25.netlify.app";
+const allowedOrigin = "https://ecommece-frontend-tbf9.onrender.com";
 
 app.use(
   cors({
