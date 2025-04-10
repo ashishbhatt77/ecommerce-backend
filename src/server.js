@@ -6,7 +6,6 @@ const rateLimit = require("express-rate-limit");
 const mongoSanitize = require("express-mongo-sanitize");
 const cookieParser = require("cookie-parser");
 const connectDatabase = require("./config/db");
-const swaggerDocs = require("./swaggerConfig");
 
 const app = express();
 
@@ -14,11 +13,6 @@ app.use(helmet({ crossOriginResourcePolicy: { policy: "cross-origin" } }));
 app.use(express.json({ limit: "10kb" }));
 app.use(cookieParser());
 app.use(mongoSanitize());
-
-swaggerDocs(app);
-
-// const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 100 });
-// app.use(limiter);
 
 app.use(
   cors({
