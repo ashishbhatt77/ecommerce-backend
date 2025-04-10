@@ -14,10 +14,7 @@ app.use(express.json({ limit: "10kb" }));
 app.use(cookieParser());
 app.use(mongoSanitize());
 
-const allowedOrigins = [
-  "http://localhost:3000",
-  "https://stately-centaur-fb5f25.netlify.app"
-];
+const allowedOrigins = "https://stately-centaur-fb5f25.netlify.app";
 
 app.use(
   cors({
