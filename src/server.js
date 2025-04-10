@@ -14,6 +14,11 @@ app.use(express.json({ limit: "10kb" }));
 app.use(cookieParser());
 app.use(mongoSanitize());
 
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://stately-centaur-fb5f25.netlify.app"
+];
+
 app.use(
   cors({
     origin: process.env.CORS_ORIGIN?.split(",") || ["http://localhost:3000"],
